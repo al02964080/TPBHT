@@ -1,0 +1,528 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Pixelero</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The HTML5 Herald">
+  <meta name="author" content="SitePoint">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Work+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <style type="text/css">
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            padding: 0;
+            margin: 0;
+            font-family: 'Inter';
+            display: inline-flex;
+            width: 100%;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 600;
+        }
+        section {
+            min-height: 100vh;
+        }
+        section.form {
+            background-color: #eee9ef;
+
+            width:  50%;
+        }
+        section.form > div {
+            padding: 4em;
+        }
+
+        section.result {
+            padding: 4em;
+            color: white;
+            background-color: #793C84;
+            width: 50%;
+            background: linear-gradient(324deg, #7f4d5e, #773673, #4f296c);
+        }
+        input, select {
+            padding: 16px 0px 16px 15px;
+            width:  100%;
+            margin-bottom: 40px;
+            border-radius: 3px;
+            max-width: 100%;
+            border: solid 2px #c4bac4;
+            background-color: transparent;
+            transition: all 0.5s ease;
+            font-family: 'Inter';
+            font-size: 15px;
+            color: #2d262f;
+            font-weight: 500;
+
+        }
+        input:focus, select:focus {
+            outline: none;
+            border: solid 2px #793c8463;
+            box-shadow: 0px 0px 11px 4px #793c843d;
+        }
+        label {
+            font-weight: 500 !important;
+            display: block;
+            margin-bottom: 8px;
+            color: #69626a;
+            font-weight: 400 !important;
+        }
+        p {
+            font-weight: 500 !important;
+            display: block;
+            margin-bottom: 8px;
+            color: #69626a;
+            font-weight: 400 !important;
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        h1 {
+            font-size: 48px;
+            color: #4b334f;
+        }
+        section.form h3 {
+            font-size: 24px;
+            font-weight: 400;
+            color: #69626a;
+        }
+        section.result h1 {
+            font-size: 48px;
+            color: white;
+        }
+        button {
+            width:  100%;
+            padding: 18px 0px 18px 15px;
+            border-radius: 3px;
+            border: none;
+            color: white;
+            background-color: #793C84;
+            font-weight: 500;
+            font-family: 'Inter';
+            font-size: 15px;
+            letter-spacing: 0.02em;
+            cursor: pointer;
+        }
+        form {
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 100%;
+        }
+        hr {
+            margin: 60px 0;
+            border-top:solid 2px #c4bac4;
+        }
+        .logo {
+            border-radius: 3px;
+            border:  solid 1px #c4bac4;
+            width: fit-content;
+            background-color: white;
+        }
+        .logo img {
+            width: 90px;
+            margin: 2px 5px;
+        }
+        .boton {
+            width: 100%;
+            display: block;
+            padding: 18px 0px 18px 15px;
+            border-radius: 3px;
+            color: #793C84;
+            background-color: white;
+            text-align: center;
+            font-weight: 500;
+            font-family: 'Inter';
+            font-size: 15px;
+            letter-spacing: 0.02em;
+            text-decoration: none;
+        }
+        section.form > div:after {
+            content: '';
+            position: absolute;
+            width: 45px;
+            height: 45px;
+            background-color: #eee9ef;
+            right: 50%;
+            top: 20%;
+            transform: translateX(50%) rotate(45deg);
+        }
+        #mensajeDos {
+            display: none;
+        }
+        @media only screen and (max-width: 767px) {
+            body {
+                flex-wrap: wrap;
+            }
+            section.form, section.result {
+                width: 100%;
+                padding:  2em;
+                min-height: unset;
+            }
+            section.form > div {
+                padding:  0;
+            }
+            h1, section.result h1 {
+                font-size: 35px;
+            }
+            h3 {
+                font-size: 18px !important;
+            }
+            body {
+                font-size:  13px;
+            }
+            section.form > div:after {
+                display: none;
+            }
+            #mensajeDos {
+                display: block;
+            }
+            #mensajeDos p {
+                color:  white;
+                opacity:  0.6;
+            }
+            #mensajeUno {
+                display: none;
+            }
+            #mensajeDos hr {
+                margin: 60px 0;
+                border-top: solid 2px #c4bac4;
+                border-width: 2px 0 0 0;
+                opacity: 0.6;
+            }
+        }
+/*        img {display: none;}
+        #mensajeDos, #mensajeUno {
+            display: none;
+        }
+        section.result {
+            display: none;
+        }*/
+        .input-group-text {
+    display: flex;
+    align-items: center;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: center;
+    white-space: nowrap;
+    background-color: #e7e1e8;
+    border: 2px solid #c4bac4;
+    border-radius: 0px 3px 3px 0px;
+    border-width: 2px 2px 2px 0px;
+}
+.input-group {
+    display: inline-flex;
+    margin-bottom: 40px;
+}
+.input-group input {
+    margin:  0;
+    border-width: 2px 0px 2px 2px;
+    border-radius: 3px 0px 0px 3px;
+}
+
+
+
+
+
+
+    </style>
+
+    
+</head>
+<body>
+<section class="form">
+    <div>
+        <h1>Encuentra<br> tu talla</h1>
+        <h3>Escribe tus medidas</h3>
+        <label for="tipo">Tipo de prenda</label>
+        <select id="tipo" name="tipo" onchange="tipoPrenda()">
+            <option value="formularioBody">Vestido</option>
+            <option value="formularioCinturilla">Blusa</option>
+        </select>
+        <form name="medidasBody" id="formularioBody" style="display: inline-flex;" class="formulario">
+            <div style="width: 31%;"><label for="pecho">Tórax:</label>
+            <div class="input-group"><input type="number" id="pecho" name="pecho" min="70" required><span class="input-group-text" id="basic-addon2">cms.
+            </span></div></div><br>
+            <div style="width: 31%;"><label for="cintura">Cintura:</label>
+            <input type="number" id="cintura" name="cintura" min="40" required placeholder="CMS"></div><br>
+            <div style="width: 31%;"><label for="cadera">Cadera:</label>
+            <input type="number" id="cadera" name="cadera" min="70" required placeholder="CMS"></div>
+            <button type="submit">Calcular Talla</button>
+        </form>
+        <form name="medidasCinturilla" id="formularioCinturilla" style="display: none;" class="formulario">
+            <div style="width: 48%;"><label for="pechoCinturilla">Tórax:</label>
+            <input type="number" id="pechoCinturilla" name="pechoCinturilla" min="70" required placeholder="CMS"></div><br>
+            <div style="width: 48%;"><label for="cinturaCinturilla">Cintura:</label>
+            <input type="number" id="cinturaCinturilla" name="cinturaCinturilla" min="40" required placeholder="CMS"></div>
+            <button type="submit">Calcular Talla</button>
+        </form>
+        
+        <div id="mensajeUno"><hr>
+        <p>Esta es unicamente una guía en medida de tallas. El resultado aplica unicamente para las prendas aquí mencionadas.</p>
+        <p>©2022 | Idalia Encinia</p></div>
+    </div>
+</section>
+<section class="result">
+    <div id="resultado">
+        <h1>Tórax:</h1><h1 id="torax-medida"></h1>
+        <br>
+        <h1>Cintura:</h1><h1 id="cintura-medida"></h1>
+        <br>
+        <h1>Cadera:</h1><h1 id="cadera-medida"></h1>
+        <br>
+    </div>
+    <div id="mensajeDos"><hr><p>Esta es unicamente una guía en medida de tallas. El resultado aquí obtenido aplica unicamente para las prendas aquí mencionadas.</p>
+    <p>©2022 | Idalia Encinia</p></div>
+</section>
+
+<script>
+
+    $('#pecho').on('keyup', function (){
+        document.getElementById("torax-medida").innerHTML = this.value;
+    });
+    $('#cintura').on('keyup', function (){
+        document.getElementById("cintura-medida").innerHTML = this.value;
+    });
+    $('#cadera').on('keyup', function (){
+        document.getElementById("cadera-medida").innerHTML = this.value;
+    });
+
+    var formularioBody = document.getElementById("formularioBody");
+    var formularioCinturilla = document.getElementById("formularioCinturilla");
+
+    function tipoPrenda() {
+        var nuevoFormulario = document.getElementById("tipo").value;
+
+        var formularios = document.getElementsByClassName("formulario");
+        for (let i = 0; i < formularios.length; i++) {
+        formularios[i].style.display = "none";
+        }
+        document.getElementById(nuevoFormulario).style.display = 'inline-flex';
+    }
+
+
+    $('#formularioBody').submit(function () {
+        var puntos = 0;
+        var promedio = 0;
+        var talla = '';
+
+        var medidaPecho = document.getElementById("pecho").value;
+        var medidaCintura = document.getElementById("cintura").value;
+        var medidaCadera = document.getElementById("cadera").value;
+
+        if(medidaPecho < 76 && medidaPecho >= 72) {
+            puntos += 1;
+        }
+        else if(medidaPecho >= 76  && medidaPecho < 80) {
+            puntos += 2;
+        }
+        else if(medidaPecho >= 80 && medidaPecho < 85) {
+            puntos += 3;
+        }
+        else if(medidaPecho >= 85 && medidaPecho < 90) {
+            puntos += 4;
+        }
+        else if (medidaPecho >= 90 && medidaPecho < 95) {
+            puntos += 5;
+        }
+        else if(medidaPecho >= 95 && medidaPecho < 102) {
+            puntos += 6;
+        }
+        else if(medidaPecho >= 102 && medidaPecho < 110) {
+            puntos += 7;
+        }
+        else if(medidaPecho >= 110) {
+            puntos += 8;
+        }
+
+
+        if(medidaCintura < 71 && medidaCintura >= 67) {
+            puntos += 1;
+        }
+        else if(medidaCintura >= 71 && medidaCintura < 75) {
+            puntos += 2;
+        }
+        else if(medidaCintura >= 75 && medidaCintura < 80) {
+            puntos += 3;
+        }
+        else if(medidaCintura >= 80 && medidaCintura < 85) {
+            puntos += 4;
+        }
+        else if (medidaCintura >= 85 && medidaCintura < 90) {
+            puntos += 5;
+        }
+        else if(medidaCintura >= 90 && medidaCintura < 97) {
+            puntos += 6;
+        }
+        else if(medidaCintura >= 97 && medidaCintura < 104) {
+            puntos += 7;
+        }
+        else if(medidaCintura >= 104) {
+            puntos += 8;
+        }
+
+
+        if(medidaCadera < 85 && medidaCadera >= 81) {
+            puntos += 1;
+        }
+        else if(medidaCadera >= 85 && medidaCadera < 89) {
+            puntos += 2;
+        }
+        else if(medidaCadera >= 89 && medidaCadera < 94) {
+            puntos += 3;
+        }
+        else if(medidaCadera >= 94 && medidaCadera < 99) {
+            puntos += 4;
+        }
+        else if (medidaCadera >= 99 && medidaCadera < 104) {
+            puntos += 5;
+        }
+        else if(medidaCadera >= 104 && medidaCadera < 112) {
+            puntos += 6;
+        }
+        else if(medidaCadera >= 112 && medidaCadera < 119) {
+            puntos += 7;
+        }
+        else if(medidaCadera >= 119) {
+            puntos += 8;
+        }
+
+        promedio = puntos/3;
+
+        if(promedio >= 1 && promedio < 1.6) {
+            talla = "XXS";
+        }
+        else if(promedio >= 1.6 && promedio < 2.6) {
+            talla = "XS";
+        }
+        else if(promedio >= 2.6 && promedio < 3.6) {
+            talla = "S";
+        }
+        else if(promedio >= 3.6 && promedio < 4.6) {
+            talla = "M";
+        }
+        else if(promedio >= 4.6 && promedio < 5.6) {
+            talla = "L";
+        }
+        else if(promedio >= 5.6 && promedio < 6.6) {
+            talla = "XL";
+        }
+        else if(promedio >= 6.6 && promedio < 7.6) {
+            talla = "XXL";
+        }
+        else if(promedio >= 7.6) {
+            talla = "XXXL";
+        }
+
+        document.getElementById("resultado").innerHTML = "<h1>Tu talla ideal de vestido es:<br> Talla "+ talla;
+
+        return false;
+    });
+
+    $('#formularioCinturilla').submit(function () {
+        var puntos = 0;
+        var promedio = 0;
+        var talla = '';
+
+        var medidaPecho = document.getElementById("pechoCinturilla").value;
+        var medidaCintura = document.getElementById("cinturaCinturilla").value;
+
+
+        if(medidaPecho < 70 && medidaPecho >= 65) {
+            puntos += 1;
+        }
+        else if(medidaPecho >= 70  && medidaPecho < 75) {
+            puntos += 2;
+        }
+        else if(medidaPecho >= 75 && medidaPecho < 80) {
+            puntos += 3;
+        }
+        else if(medidaPecho >= 80 && medidaPecho < 85) {
+            puntos += 4;
+        }
+        else if (medidaPecho >= 85 && medidaPecho < 90) {
+            puntos += 5;
+        }
+        else if(medidaPecho >= 90 && medidaPecho < 95) {
+            puntos += 6;
+        }
+        else if(medidaPecho >= 95) {
+            puntos += 7;
+        }
+
+
+        if(medidaCintura < 75 && medidaCintura >= 70) {
+            puntos += 1;
+        }
+        else if(medidaCintura >= 75 && medidaCintura < 80) {
+            puntos += 2;
+        }
+        else if(medidaCintura >= 80 && medidaCintura < 85) {
+            puntos += 3;
+        }
+        else if(medidaCintura >= 85 && medidaCintura < 90) {
+            puntos += 4;
+        }
+        else if (medidaCintura >= 90 && medidaCintura < 95) {
+            puntos += 5;
+        }
+        else if(medidaCintura >= 95 && medidaCintura < 100) {
+            puntos += 6;
+        }
+        else if(medidaCintura >= 100) {
+            puntos += 7;
+        }
+
+        promedio = puntos/2;
+
+        if(promedio >= 1 && promedio < 2) {
+            talla = "XXS";
+        }
+        else if(promedio >= 2 && promedio < 3) {
+            talla = "XS";
+        }
+        else if(promedio >= 3 && promedio < 4) {
+            talla = "S";
+        }
+        else if(promedio >= 4 && promedio < 5) {
+            talla = "M";
+        }
+        else if(promedio >= 5 && promedio < 6) {
+            talla = "L";
+        }
+        else if(promedio >= 6 && promedio < 7) {
+            talla = "XL";
+        }
+        else if(promedio >= 7) {
+            talla = "XXL";
+        }
+
+        document.getElementById("resultado").innerHTML = "<h1>Tu talla ideal de blusa es:<br> Talla "+ talla; 
+
+
+        return false;
+    });
+
+
+    // formularioBody.addEventListener("submit", medidasBody);
+    
+    // formularioCinturilla.addEventListener("submit", medidasCinturilla);
+</script>
+</body>
+<!-- xxs = 1
+xs = 2
+s = 3
+m = 4
+l = 5
+xl = 6
+xxl = 7 
+xxxl = 8-->
+</html>
+
